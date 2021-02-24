@@ -4,7 +4,7 @@ library(dplyr)
 library(reshape2)
 library(ggplot2)
 library(RColorBrewer)
-
+library(FNN)
 #packrat:::recursivePackageDependencies("RColorBrewer",lib.loc = .libPaths()[1])
 
 dir = "www/"
@@ -27,8 +27,8 @@ get_recommendation <- function(timekeeping,smoking,edu,onlychild,alcohol,
   # 
   formatted_personality = c(tolower(timekeeping),smoking,edu,onlychild,alcohol,
                                      internet_use,lonely,dreams,lying,handedness)
-  print("formatted personality")
-  print(formatted_personality)
+  #print("formatted personality")
+  #print(formatted_personality)
   
   #query_input = data.frame(rep(0,dim(orig_responses)[2]-length(personality_topics)),formatted_personality)
   
@@ -45,7 +45,7 @@ get_recommendation <- function(timekeeping,smoking,edu,onlychild,alcohol,
   responses = cbind(int_component,cat_component,int_component2,cat_component2)
   colnames(responses)
   #responses[1,personality_topics] =  formatted_personality
-  print(responses[1:2,64:ncol(responses)])
+  #print(responses[1:2,64:ncol(responses)])
   responses = model.matrix( ~ ., data = responses)
   
 
@@ -66,7 +66,7 @@ get_recommendation <- function(timekeeping,smoking,edu,onlychild,alcohol,
 
   
   #   
-  print(table(happiness[familiars,1]))
+  #print(table(happiness[familiars,1]))
   happiness_scores = rowSums(happiness[familiars, ])
   #names(sort(happiness_scores,decreasing = TRUE))
   # determining the right group
@@ -102,39 +102,21 @@ get_recommendation <- function(timekeeping,smoking,edu,onlychild,alcohol,
   p<-ggplot(data=to_plot, aes(x=best_hobbies_names, y=best_hobbies_scores,
                               fill=coul)) +
     geom_bar(stat="identity",show.legend = FALSE)+ coord_flip() + theme_bw()+
-    labs(title="Top hobbies of your happiest personality neighbors", 
-         x="Hobbies", y = "Score")
+    labs(title="Top hobbies of your happiest personality neighbors",
+         x="Hobbies", y = "Score") + theme(text = element_text(size=15),aspect.ratio=0.25)
   #p
-  
+  # 
   to_plot= data.frame(best_music_names, best_music_scores)
   to_plot$best_music_names = factor(to_plot$best_music_names,
                                     levels =rev( to_plot$best_music_names))
   p2<-ggplot(data=to_plot, aes(x=best_music_names, y=best_music_scores,
                               fill=coul)) +
     geom_bar(stat="identity",show.legend = FALSE)+ coord_flip() + theme_bw()+
-    labs(title="Top music genres of your happiest personality neighbors", 
-         x="Music Taste", y = "Score")
+    labs(title="Top music genres of your happiest personality neighbors",
+         x="Music Taste", y = "Score") + theme(text = element_text(size=15),aspect.ratio=0.25)
   #p2
   gridExtra::grid.arrange(p, p2, nrow=2)
-  # if(plot_type == "hobbies"){
-  #   p<-ggplot(data=to_plot, aes(x=best_hobbies_names, y=best_hobbies_scores,
-  #                               fill=coul)) +
-  #     geom_bar(stat="identity",show.legend = FALSE)+ coord_flip() + theme_bw()+
-  #     labs(title="Top hobbies of your happiest personality neighbors", 
-  #          x="Hobbies", y = "Score")
-  #   p
-  #   
-  # }else{
-  #   to_plot= data.frame(best_music_names, best_music_scores)
-  #   to_plot$best_music_names = factor(to_plot$best_music_names,
-  #                                     levels =rev( to_plot$best_music_names))
-  #   p<-ggplot(data=to_plot, aes(x=best_music_names, y=best_music_scores,
-  #                               fill=coul)) +
-  #     geom_bar(stat="identity",show.legend = FALSE)+ coord_flip() + theme_bw()+
-  #     labs(title="Top hobbies of your happiest personality neighbors", 
-  #          x="Music Taste", y = "Score")
-  #   p
-  # }
+  
   
  
 }

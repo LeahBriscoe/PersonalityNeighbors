@@ -5,6 +5,6 @@ account: personalityneighbors
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3672318
-bundleId: 4252267
+bundleId: 4252371
 url: https://personalityneighbors.shinyapps.io/personalityneighbors/
-when: 1613913258.74535
+when: 1613916572.48721

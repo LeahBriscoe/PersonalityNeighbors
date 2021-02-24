@@ -5,8 +5,8 @@ library(devtools)
 # options("repos" = c("CRAN" = "https://cran.rstudio.com", 
 #                     "svn.r-project" = "https://svn.r-project.org/R-packages/trunk/foreign"))
 # See above for the definitions of ui and server
-source("test.R")
-#source("process_user_input.R")
+#source("test.R")
+source("process_user_input.R")
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
@@ -110,11 +110,16 @@ server <- function(input, output) {
   # with requested number of bins
   # This expression that generates a histogram is wrapped in a call
   # to renderPlot to indicate that:
-  #
+  # 
   # 1. It is "reactive" and therefore should be automatically
   #    re-executed when inputs (input$bins) change
   # 2. Its output type is a plot
-  # output$timekeeping_out <- renderText({ 
+  # output$lonely_out <- renderText({
+  #   #paste("You have selected this",input$timekeeping)
+  #   #print(paste("Dreams",input$dreams))
+  #   process_input(input$lonely)
+  # })
+  # output$timekeeping_out <- renderText({
   #   #paste("You have selected this",input$timekeeping)
   #   print(paste("Dreams",input$dreams))
   #  result = get_recommendation(input$timekeeping,input$smoking,input$edu,input$onlychild,input$alcohol,
@@ -122,7 +127,7 @@ server <- function(input, output) {
   #  #result
   #   #process_input(input$dreams)
   # })
-  output$plot_hobbies<- renderPlot({ 
+  output$plot_hobbies<- renderPlot({
     #paste("You have selected this",input$timekeeping)
     #print(paste("Dreams",input$dreams))
     get_recommendation(input$timekeeping,input$smoking,input$edu,input$onlychild,input$alcohol,
@@ -131,32 +136,18 @@ server <- function(input, output) {
     #result
     #process_input(input$dreams)
   })
-  output$plot_music<- renderPlot({ 
-    #paste("You have selected this",input$timekeeping)
-    #print(paste("Dreams",input$dreams))
-    get_recommendation(input$timekeeping,input$smoking,input$edu,input$onlychild,input$alcohol,
-                       input$internet_use,input$lonely,input$dreams,input$lying,
-                       input$handedness,"music")
-    #result
-    #process_input(input$dreams)
-  })
-  
-  
-  # output$mental_range <- renderText({ 
-  #   pres <- data.frame(Position = rep(c(input$routine_mental, input$routine_fitness), each = 1),
-  #                      Name = c("Mental Health", "Fitness"),
-  #                      start = c("2020-01-01", "2020-01-01"),
-  #                      end = c("2020-01-15", "2020-01-29"),
-  #                      #start = c(as.character(input$mental_range[1]), as.character(input$mental_range[1])),
-  #                      #end = c(as.character(input$mental_range[2]),as.character(input$mental_range[2])),
-  #                      color = c('#cbb69d', '#603913'),
-  #                      fontcolor = c("black", "white"))
-  #   vistime(pres,
-  #           col.event = "Position",
-  #           col.group = "Name",
-  #           title = "Routines")
+  # output$plot_music<- renderPlot({
+  #   #paste("You have selected this",input$timekeeping)
+  #   #print(paste("Dreams",input$dreams))
+  #   get_recommendation(input$timekeeping,input$smoking,input$edu,input$onlychild,input$alcohol,
+  #                      input$internet_use,input$lonely,input$dreams,input$lying,
+  #                      input$handedness,"music")
+  #   #result
+  #   #process_input(input$dreams)
   # })
-  
+
+
+
   
 }
 
